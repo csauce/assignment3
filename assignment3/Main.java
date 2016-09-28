@@ -21,6 +21,7 @@ public class Main {
 	static ArrayList<String> store = new ArrayList<String>();
 	static String start;
 	static String end;
+	static ArrayList<String> result = new ArrayList<String>();
 	// static variables and constants only here.
 	
 	public static void main(String[] args) throws Exception {
@@ -40,12 +41,16 @@ public class Main {
 		}
 		initialize();
 		ArrayList<String> temp = new ArrayList<String>();
-		temp = parse(kb);
+		temp = parse(kb);	//parse return the arraylist of the start and end
+		if(temp.size()!=0){	//if arraylist is empty, terminat eprogram, else generate result
 		start = temp.get(0);
-		start = start.toUpperCase();
 		end = temp.get(1);
-		end = end.toUpperCase();
-		getWordLadderBFS(start,end);
+		result = getWordLadderBFS(start,end);
+		printLadder(result);
+		}
+		else{
+			System.out.println("bye");
+		}
 		// TODO methods to read in words, output ladder
 	}
 	
@@ -64,14 +69,17 @@ public class Main {
 		String word = keyboard.nextLine();
 		String[] storage = new String[2];
 		ArrayList<String> result = new ArrayList<String>();
+		if(word.equals("/quit")){
+			return result;
+		}
 		storage = word.split(" ");
-		if(storage[0].length()==5 & storage[1].length()==5){
+		if(storage[0].equals("/quit")){
+			return result;
+		}
 			result.add(storage[0]);
 			result.add(storage[1]);
 			return result;
-		}
 		// TO DO
-		return null;
 	}
 	
 public static ArrayList<String> getWordLadderDFS(String start, String end) {
@@ -176,13 +184,11 @@ public static ArrayList<String> getWordLadderDFS(String start, String end) {
 		
 		// TODO some code
 		Set<String> dict = makeDictionary();
-		//BFSLINKED.BFSengineladder(start,end,dict);
-		int i;
+		start = start.toUpperCase();
+		end = end.toUpperCase();
 		store = BFSLINKED.BFSengineladder(start,end,dict);
-		printLadder(store);
 		// TODO more code
-		
-		return null; // replace this line later with real return
+		return store; // replace this line later with real return
 	}
     
 	public static Set<String>  makeDictionary () {
@@ -204,13 +210,13 @@ public static ArrayList<String> getWordLadderDFS(String start, String end) {
 	public static void printLadder(ArrayList<String> ladder) {
 		int i;
 		if(ladder.get(0)!="-2"){
-			System.out.println("a " + (ladder.size()-2) + "- rung word ladder exists between " + start + " and " + end);
+			System.out.println("a " + (ladder.size()-2) + "- rung word ladder exists between " + start.toLowerCase() + " and " + end.toLowerCase());
 		for(i=0;i<ladder.size();i++){
-			System.out.println(ladder.get(i));
+			System.out.println(ladder.get(i).toLowerCase());
 		}
 		}
 		else{
-			System.out.println("no word ladder can be found between " + start + " and " + end);
+			System.out.println("no word ladder can be found between " + start.toLowerCase() + " and " + end.toLowerCase());
 		}
 		
 	}
