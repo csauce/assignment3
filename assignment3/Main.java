@@ -1,17 +1,16 @@
 /* WORD LADDER Main.java
  * EE422C Project 3 submission by
  * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
- * <Student1 5-digit Unique No.>
+ * Christopher Sauceda
+ * ces3723
+ * 16470
  * <Student2 Name>
  * <Student2 EID>
  * <Student2 5-digit Unique No.>
  * Slip days used: <0>
- * Git URL:
+ * Git URL: https://github.com/csauce/assignment3
  * Fall 2016
  */
-
 
 package assignment3;
 import java.util.*;
@@ -105,15 +104,26 @@ public static ArrayList<String> getWordLadderDFS(String start, String end) {
 			}
 		}
 	}
-	
+
+
+	/*
+	 * 	public static boolean find(String value, ArrayList<String> ladder, Set<String> dict) 
+	 * params: value:String - String to find in the dictionary
+	 * 		   ladder: ArrayList<String> - list of words already used (in the ladder)
+	 * 		   dict: Set<String> - set with dictionary words
+	 * returns: boolean representing whether the value was found in a ladder or not.
+	 * does: uses recursion to find a valid word ladder in the given dictionary that ends with String value.
+	 * 
+	 */
 	public static boolean find(String value, ArrayList<String> ladder, Set<String> dict) {
 		//find one letter difference words
 		ArrayList<String> oneLtrDWords = oneLtrDiff(ladder.get(ladder.size() - 1), dict);
 		if(oneLtrDWords.isEmpty()) {
+			//end of path
 			return false;
 		}
 		else {
-			oneLtrDWords = sortByProximity(value, oneLtrDWords);
+			oneLtrDWords = sortByProximity(value, oneLtrDWords); //order words so that words with closest similarity to String value get processed first.
 			boolean found = false;
 			for(int i = 0; i < oneLtrDWords.size(); i++) {
 				String w = oneLtrDWords.get(i);
@@ -135,6 +145,13 @@ public static ArrayList<String> getWordLadderDFS(String start, String end) {
 		}
 	}
 	
+	/*
+	 * 	public static ArrayList<String> sortByProximity(String value, ArrayList<String> list) 
+	 * params: value: String - String to find similarities with
+	 * 		   list: ArrayList<String> - words that are to be compared with value
+	 * returns: ArrayList<String> containing the same words that were in list in order from most similar to least similar.
+	 * 			Similarity is determined by number of characters in the same index between 2 words. (String in list and String value)
+	 */
 	public static ArrayList<String> sortByProximity(String value, ArrayList<String> list) {
 		ArrayList<StringSim> simSorts = new ArrayList<StringSim>();
 		for(int i = 0; i < list.size(); i++) { 
@@ -151,6 +168,11 @@ public static ArrayList<String> getWordLadderDFS(String start, String end) {
 		
 	}
 	
+	/*
+	 * 	public static int findSimChars(String value, String value2) 
+	 * params: value, value2: String - Strings to find similarities between.
+	 * returns: number of characters that are in the same index in each word.
+	 */
 	public static int findSimChars(String value, String value2) {
 		int sims = 0;
 		for(int i = 0; i < value.length(); i++) {
@@ -160,6 +182,12 @@ public static ArrayList<String> getWordLadderDFS(String start, String end) {
 		return sims;
 	}
 	
+	/*
+	 * 	public static ArrayList<String> oneLtrDiff(String value, Set<String> dict)
+	 * params: value: String - String that words in dict have to have a one letter difference with
+	 * 		   dict: Set<String> - set of words that are to be compared with value
+	 * returns: ArrayList<String> containing words that only have a single letter difference with value
+	 */
 	public static ArrayList<String> oneLtrDiff(String value, Set<String> dict) {
 		
 		ArrayList<String> oneLtrs = new ArrayList<String>();
@@ -170,6 +198,13 @@ public static ArrayList<String> getWordLadderDFS(String start, String end) {
 		return oneLtrs;
 	}
 	
+	
+	/*
+	 * 	public static boolean isOneLtrDiff(String value, String dict) 
+	 * params: value: String - String to be compared to
+	 * 		   dict: String - String to compare with value
+	 * returns: boolean: true if word has < 1 char differences, false otherwise.
+	 */
 	public static boolean isOneLtrDiff(String value, String dict) {
 		int diffs = 0;
 		for(int i = 0; i < value.length(); i++) {
