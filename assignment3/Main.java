@@ -74,16 +74,102 @@ public class Main {
 		return null;
 	}
 	
-	public static ArrayList<String> getWordLadderDFS(String start, String end) {
+public static ArrayList<String> getWordLadderDFS(String start, String end) {
 		
 		// Returned list should be ordered start to end.  Include start and end.
 		// Return empty list if no ladder.
-		// TODO some code
-		Set<String> dict = makeDictionary();
-		DFS.DFSengineladder(start, end, dict);
-		// TODO more code
 		
-		return null; // replace this line later with real return
+		Set<String> dict = makeDictionary();
+		
+		ArrayList<String> result = new ArrayList<String>();
+		
+		if(start.equalsIgnoreCase(end)) { return result; }
+		else {
+			result.add(start.toLowerCase());
+			dict.remove(start.toUpperCase());
+			boolean exists = find(end, result, dict);
+			
+			//System.out.println(exists);
+			if(exists) return result;
+			else {
+				result.clear();
+				return result;
+			}
+		}
+	}
+	
+	public static boolean find(String value, ArrayList<String> ladder, Set<String> dict) {
+		//find one letter difference words
+		ArrayList<String> oneLtrDWords = oneLtrDiff(ladder.get(ladder.size() - 1), dict);
+		if(oneLtrDWords.isEmpty()) {
+			return false;
+		}
+		else {
+			oneLtrDWords = sortByProximity(value, oneLtrDWords);
+			boolean found = false;
+			for(int i = 0; i < oneLtrDWords.size(); i++) {
+				String w = oneLtrDWords.get(i);
+				ladder.add(w.toLowerCase());
+				dict.remove(w.toUpperCase());
+				if(w.equalsIgnoreCase(value)) return true;
+				else {
+					found = find(value, ladder, dict);
+					if(found) {
+						return true;
+					} else {
+						ladder.remove(w.toLowerCase());
+						continue;
+					}
+					
+				}
+			}
+			return found;
+		}
+	}
+	
+	public static ArrayList<String> sortByProximity(String value, ArrayList<String> list) {
+		ArrayList<StringSim> simSorts = new ArrayList<StringSim>();
+		for(int i = 0; i < list.size(); i++) { 
+			simSorts.add(new StringSim( findSimChars(value, list.get(i)),  list.get(i) ) );
+		}
+		Collections.sort(simSorts);
+		
+		ArrayList<String> res = new ArrayList<String>();
+		for(int j = 0; j < list.size(); j++) {
+			res.add(simSorts.get(j).string);
+		}
+		
+		return res;
+		
+	}
+	
+	public static int findSimChars(String value, String value2) {
+		int sims = 0;
+		for(int i = 0; i < value.length(); i++) {
+			if(value.toLowerCase().charAt(i) == value2.toLowerCase().charAt(i)) sims++;
+		}
+		
+		return sims;
+	}
+	
+	public static ArrayList<String> oneLtrDiff(String value, Set<String> dict) {
+		
+		ArrayList<String> oneLtrs = new ArrayList<String>();
+		dict.forEach(word -> {
+			if(isOneLtrDiff(value, word)) oneLtrs.add(word);
+		});
+		
+		return oneLtrs;
+	}
+	
+	public static boolean isOneLtrDiff(String value, String dict) {
+		int diffs = 0;
+		for(int i = 0; i < value.length(); i++) {
+			if(value.toLowerCase().charAt(i) != dict.toLowerCase().charAt(i)) diffs++;
+		}
+		
+		if(diffs > 1) return false;
+		else return true;
 	}
 	
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
