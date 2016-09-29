@@ -256,6 +256,8 @@ public static ArrayList<String> getWordLadderDFS(String start, String end) {
 		
 		// TODO some code
 		Set<String> dict = makeDictionary();
+		Main.start = start;
+		Main.end = end;
 		start = start.toUpperCase();
 		end = end.toUpperCase();
 		store = BFSLINKED.BFSengineladder(start,end,dict);
