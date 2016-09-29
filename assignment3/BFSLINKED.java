@@ -58,8 +58,6 @@ public class BFSLINKED {
 				}
 				preindex++;
 				}
-		start = "-2";
-		result.add(start);
 		return result;
 	}
 	/**
