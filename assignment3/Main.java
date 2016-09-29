@@ -94,11 +94,46 @@ public static ArrayList<String> getWordLadderDFS(String start, String end) {
 		else {
 			result.add(start.toLowerCase());
 			dict.remove(start.toUpperCase());
-			boolean exists = find(end, result, dict);
+			
+			boolean exists, switched = false;
+			try
+			{
+				exists = find(end, result, dict); //fix for possible overflow
+			}
+			catch(StackOverflowError e)
+			{
+				//reverse the search, go backwards
+				result.clear();
+				result.add(end.toLowerCase());
+				dict.clear();
+				dict = makeDictionary();
+				
+				//try again
+				try
+				{
+					exists = find(start, result, dict);
+					switched = true;
+				} 
+				catch(StackOverflowError s)
+				{
+					exists = false;
+				}
+				
+			}
+			
 			
 			//System.out.println(exists);
-			if(exists) return result;
-			else {
+			if(exists)
+			{
+				if(switched)
+				{
+					//reverse list
+					Collections.reverse(result);
+				} 
+				
+				return result;
+				
+			} else {
 				result.clear();
 				return result;
 			}
