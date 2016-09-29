@@ -4,9 +4,9 @@
  * Christopher Sauceda
  * ces3723
  * 16470
- * <Student2 Name>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
+ * Ruibin Ni
+ * rn6726
+ * 16465
  * Slip days used: <0>
  * Git URL: https://github.com/csauce/assignment3
  * Fall 2016
