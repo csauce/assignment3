@@ -89,6 +89,8 @@ public static ArrayList<String> getWordLadderDFS(String start, String end) {
 		Set<String> dict = makeDictionary();
 		
 		ArrayList<String> result = new ArrayList<String>();
+		Main.start = start;
+		Main.end = end;
 		
 		if(start.equalsIgnoreCase(end)) { return result; }
 		else {
@@ -279,8 +281,8 @@ public static ArrayList<String> getWordLadderDFS(String start, String end) {
 	
 	public static void printLadder(ArrayList<String> ladder) {
 		int i;
-		if(ladder.get(0)!="-2"){
-			System.out.println("a " + (ladder.size()-2) + "- rung word ladder exists between " + start.toLowerCase() + " and " + end.toLowerCase());
+		if(! ladder.isEmpty() ){
+			System.out.println("a " + (ladder.size()-2) + "-rung word ladder exists between " + start.toLowerCase() + " and " + end.toLowerCase() + ".");
 		for(i=0;i<ladder.size();i++){
 			System.out.println(ladder.get(i).toLowerCase());
 		}
