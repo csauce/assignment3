@@ -6,7 +6,7 @@
  * 16470
  * Ruibin Ni
  * rn6726
- * <Student2 5-digit Unique No.>
+ * 16465
  * Slip days used: <0>
  * Git URL: https://github.com/csauce/assignment3
  * Fall 2016
