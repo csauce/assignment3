@@ -89,8 +89,8 @@ public static ArrayList<String> getWordLadderDFS(String start, String end) {
 		Set<String> dict = makeDictionary();
 		
 		ArrayList<String> result = new ArrayList<String>();
-		Main.start = start;
-		Main.end = end;
+		Main.start = start.toLowerCase();
+		Main.end = end.toLowerCase();
 		
 		if(start.equalsIgnoreCase(end)) { return result; }
 		else {
